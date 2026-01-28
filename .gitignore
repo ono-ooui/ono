@@ -1,3 +1,5 @@
 _build
 *.coverage
 _coverage
+_opam
+_opam/**
