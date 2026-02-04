@@ -4,9 +4,11 @@
 
 - first version
 
-# 0.1 - 2025-02-04
+# 0.2 - 2026-02-04
 
 ## Added
 
-- square.wat and cram test
-- function print_i64
+- factorial.wat + cram test (préliminaire 1)
+- square.wat + cram test (préliminaire 2)
+- function print_i64 (préliminaire 2)
+
