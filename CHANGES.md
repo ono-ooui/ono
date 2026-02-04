@@ -9,3 +9,6 @@
 ## Added
 
 - factorial.wat + cram test (préliminaire 1)
+- square.wat + cram test (préliminaire 2)
+- function print_i64 (préliminaire 2)
+
