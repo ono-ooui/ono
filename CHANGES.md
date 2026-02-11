@@ -4,15 +4,20 @@
 
 - first version
 
-# 0.2 - 2026-02-06
+# 0.2 - 2026-02-04
 
 ## Added
 
-- random_i32.wat
-- function random_i32 (préliminaire)
+- factorial.wat + cram test (préliminaire 1) (#5)
+- square.wat + cram test (préliminaire 2) (#6)
+- function print_i64 (préliminaire 2) (#6)
 
 # 0.3 - 2026-02-11
 
 ## Added
 
 - option seed for function random_i32 (préliminaire 3) + cram tests (#5)
+
+## Changed
+
+- factorial.wat is now a tail call
