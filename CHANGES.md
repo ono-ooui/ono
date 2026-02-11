@@ -12,3 +12,8 @@
 - square.wat + cram test (préliminaire 2) (#6)
 - function print_i64 (préliminaire 2) (#6)
 
+# 0.3 - 2026-02-11
+
+## Changed
+
+- factorial.wat is now a tail call
