@@ -1,14 +1,18 @@
 Test the output of the man page:
   $ ono concrete --help=plain
   NAME
-         ono-concrete
+         ono-concrete - This is a doc for concrete command
   
   SYNOPSIS
-         ono concrete [OPTION]… FILE
+         ono concrete [--seed=INT] [OPTION]… FILE
   
   ARGUMENTS
          FILE (required)
              Source file to analyze.
+  
+  OPTIONS
+         --seed=INT
+             Set the seed for random number generation.
   
   COMMON OPTIONS
          --color=WHEN (absent=auto)
