@@ -10,3 +10,9 @@
 
 - random_i32.wat
 - function random_i32 (préliminaire)
+
+# 0.3 - 2026-02-11
+
+## Added
+
+- option seed for function random_i32 (préliminaire 3) + cram tests (#5)
