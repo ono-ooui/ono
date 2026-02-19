@@ -58,6 +58,27 @@
     )
   )
 
+  (func $2dCoordsTo1d
+
+  )
+
+  (func $1dCoordsTo2d
+    (block $stop
+      (loop $loop
+        ;; <- LOOP
+        ;; stop if n = 0
+        (i32.eq (local.get $n) (i32.const 0))
+        br_if $stop ;; go to STOP if n = 0
+
+        ;; decrement n
+        (i32.sub (local.get $n) (i32.const 1))
+        local.set $n
+
+        br $loop ;; go back to LOOP
+      )
+    )
+  )
+
   (func $init
     (i32.mul (global.get $w) (global.get $h))
     (i32.const 10)

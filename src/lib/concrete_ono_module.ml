@@ -20,7 +20,7 @@ let sleep (seconds : Kdo.Concrete.I32.t) : (unit, _) Result.t =
   Ok ()
 
 let cell_print (number : Kdo.Concrete.I32.t) : (unit, _) Result.t =
-  Buffer.add_string buf ( if Kdo.Concrete.I32.to_int number < 0 then "🦊" else "  " );
+  Buffer.add_string buf ( if Kdo.Concrete.I32.to_int number < 1 then "🦊" else "  " );
   Ok ()
 
 let newline () : (unit, _) Result.t =
