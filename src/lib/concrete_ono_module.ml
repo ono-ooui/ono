@@ -20,7 +20,7 @@ let sleep (seconds : Kdo.Concrete.I32.t) : (unit, _) Result.t =
   Ok ()
 
 let cell_print (number : Kdo.Concrete.I32.t) : (unit, _) Result.t =
-  Buffer.add_string buf ( if Kdo.Concrete.I32.to_int number < 91 then " " else "🦊" );
+  Buffer.add_string buf ( if Kdo.Concrete.I32.to_int number < 0 then "🦊" else "  " );
   Ok ()
 
 let newline () : (unit, _) Result.t =
@@ -42,7 +42,7 @@ let m =
       ("print_i64", Extern_func (i64 ^->. unit, print_i64));
       ("random_i32", Extern_func (unit ^->. i32, random_i32));
       ("sleep", Extern_func (i32 ^->. unit, sleep));
-      ("print_cell",   Extern_func (i32  ^->. unit, cell_print));
+      ("cell_print",   Extern_func (i32  ^->. unit, cell_print));
       ("newline",      Extern_func (unit ^->. unit, newline));
       ("clear_screen", Extern_func (unit ^->. unit, clear_screen))
     ]
