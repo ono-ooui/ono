@@ -6,9 +6,10 @@
   (func $cell_print (import "ono" "cell_print") (param i32))
   (func $clear_screen (import "ono" "clear_screen"))
   (func $newline (import "ono" "newline"))
+  (func $read_int (import "ono" "read_int") (result i32))
 
-  (global $w i32 (i32.const 5))
-  (global $h i32 (i32.const 5))
+  (global $w (mut i32) (i32.const 5))
+  (global $h (mut i32) (i32.const 5))
   (memory 32)
 
   (func $genCell (param $random i32) (param $difficulty i32)
@@ -76,6 +77,10 @@
   )
 
   (func $init
+    call $read_int
+    global.set $h
+    call $read_int
+    global.set $w
     (i32.mul (global.get $w) (global.get $h))
     ;; reduce for more foxes
     (i32.const 10)

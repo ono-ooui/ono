@@ -33,6 +33,11 @@ let clear_screen () : (unit, _) Result.t =
   Buffer.clear buf;
   Ok ()
 
+let read_int () : (Kdo.Concrete.I32.t, _) Result.t =
+  let input = read_int () in
+  let result = Kdo.Concrete.I32.of_int input in
+  Ok (result)
+
 let m =
   let open Kdo.Concrete.Extern_func in
   let open Kdo.Concrete.Extern_func.Syntax in
@@ -44,7 +49,8 @@ let m =
       ("sleep", Extern_func (i32 ^->. unit, sleep));
       ("cell_print",   Extern_func (i32  ^->. unit, cell_print));
       ("newline",      Extern_func (unit ^->. unit, newline));
-      ("clear_screen", Extern_func (unit ^->. unit, clear_screen))
+      ("clear_screen", Extern_func (unit ^->. unit, clear_screen));
+      ("read_int", Extern_func (unit ^->. i32, read_int))
     ]
   in
   {
