@@ -41,7 +41,7 @@
         local.set $n
 
         ;; reserve address for cell value
-        (i32.add (local.get $n) (i32.const 4))
+        (i32.add (local.get $step) (i32.const 4))
         local.set $step
 
         ;; generate random number and store in memory
@@ -58,29 +58,26 @@
     )
   )
 
-  (func $2dCoordsTo1d
-
+  (func $2dCoordsTo1d (param $2dCoordx i32) (param $2dCoordy i32) (result i32)
+    ;; coord y * width + coord x
+    (i32.add
+      (i32.mul (local.get $2dCoordy) (global.get $w))
+      (local.get $2dCoordx)
+    )
+    return
   )
 
-  (func $1dCoordsTo2d
-    (block $stop
-      (loop $loop
-        ;; <- LOOP
-        ;; stop if n = 0
-        (i32.eq (local.get $n) (i32.const 0))
-        br_if $stop ;; go to STOP if n = 0
-
-        ;; decrement n
-        (i32.sub (local.get $n) (i32.const 1))
-        local.set $n
-
-        br $loop ;; go back to LOOP
-      )
-    )
+  (func $1dCoordsTo2d (param $1dCoord i32) (result i32) (result i32)
+    ;;coord y
+    (i32.div_s (local.get $1dCoord) (global.get $w))
+    ;;coord x
+    (i32.rem_s (local.get $1dCoord) (global.get $w))
+    return
   )
 
   (func $init
     (i32.mul (global.get $w) (global.get $h))
+    ;; reduce for more foxes
     (i32.const 10)
     call $genGrid
     call $clear_screen
