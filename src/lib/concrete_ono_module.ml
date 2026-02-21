@@ -20,11 +20,11 @@ let sleep (seconds : Kdo.Concrete.I32.t) : (unit, _) Result.t =
   Ok ()
 
 let cell_print (number : Kdo.Concrete.I32.t) : (unit, _) Result.t =
-  Buffer.add_string buf ( if Kdo.Concrete.I32.to_int number < 1 then "🦊" else "🦴" );
+  Buffer.add_string buf ( if Kdo.Concrete.I32.to_int number = 0 then "🦊" else "🦴" );
   Ok ()
 
 let is_alive (number : Kdo.Concrete.I32.t) : (Kdo.Concrete.I32.t, _) Result.t =
-  let res = if Kdo.Concrete.I32.to_int number < 1 then Kdo.Concrete.I32.of_int 1 else Kdo.Concrete.I32.of_int 0 in
+  let res = if Kdo.Concrete.I32.to_int number = 0 then Kdo.Concrete.I32.of_int 1 else Kdo.Concrete.I32.of_int 0 in
   Ok (res)
 
 let newline () : (unit, _) Result.t =
