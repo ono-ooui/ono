@@ -195,10 +195,13 @@
                   local.set $live
                 )(else (i32.eq (i32.const 3) (local.get $ngbr_count)) (local.set $live))
               )
-
+              ;; aléatoire
               local.get $i
               local.get $j
-              local.get $live
+              (i32.or
+                (i32.eqz (i32.rem_u (call $random_i32) (i32.const 100)))
+                (local.get $live)
+              )
               call $update_mem
 
               ;; spawning
@@ -226,6 +229,9 @@
       )
     )
   )
+
+
+
 
   (func $update_mem (param $i i32) (param $j i32) (param $live i32) (local $step i32)
 
