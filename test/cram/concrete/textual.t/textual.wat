@@ -7,15 +7,23 @@
   (func $is_alive (import "ono" "is_alive") (param i32) (result i32))
   (func $clear_screen (import "ono" "clear_screen"))
   (func $newline (import "ono" "newline"))
+  (func $config_height (import "ono" "config_height") (result i32))
+  (func $config_width (import "ono" "config_width") (result i32))
+  (func $config_difficulty (import "ono" "config_difficulty") (result i32))
 
-  (global $w i32 (i32.const 15))
-  (global $h i32 (i32.const 15))
+  (global $w (mut i32) (i32.const 15))
+  (global $h (mut i32) (i32.const 15))
   (memory 1)
 
   (func $init
+    call $config_width
+    global.set $w
+    call $config_height
+    global.set $h
     (i32.mul (global.get $w) (global.get $h))
     ;; reduce for more foxes
-    (i32.const 5) ;; difficulty
+    ;; (i32.const 5) ;; difficulty
+    call $config_difficulty
     call $genGrid
     call $clear_screen
   )

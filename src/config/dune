@@ -1,0 +1,8 @@
+(library
+ (public_name ono.game_config)
+ (name game_config)
+ (modules game_config)
+ (libraries
+  fpath
+  sexplib)
+ (preprocess (pps ppx_sexp_conv)))
