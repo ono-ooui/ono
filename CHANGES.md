@@ -21,3 +21,15 @@
 ## Changed
 
 - factorial.wat is now a tail call
+
+# 0.4 - 2026-02-19
+
+# Added
+
+- function sleep (Interface textuelle)
+- function print_cell (Interface textuelle)
+- function newline (Interface textuelle)
+- function clear_screen (Interface textuelle)
+
+- global variable to define height, width (Interface textuelle, wasm 1)
+- initial state saved in lineare memory (Interface textuelle, wasm 2)
