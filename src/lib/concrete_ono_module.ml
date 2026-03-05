@@ -69,7 +69,7 @@ let m =
       ("clear_screen", Extern_func (unit ^->. unit, clear_screen));
       ("config_height", Extern_func (unit ^->. i32, config_height));
       ("config_width", Extern_func (unit ^->. i32, config_width));
-      ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty))
+      ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty));
       ("read_int", Extern_func (unit ^->. i32, read_int))
     ]
   in
