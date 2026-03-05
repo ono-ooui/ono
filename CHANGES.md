@@ -34,4 +34,12 @@
 - global variable to define height, width (Interface textuelle, wasm 1)
 - initial state saved in lineare memory (Interface textuelle, wasm 2)
 
-See: https://github.com/janestreet/ppx_sexp_conv/tree/master
+# 0.4 - 2026-02-20
+
+# Added
+
+- function read_int (Interface textuelle (extension))
+
+# Changed
+
+- func init in textual.wat now reads user input for width and height

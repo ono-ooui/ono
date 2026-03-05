@@ -42,12 +42,17 @@ let config_height () : (Kdo.Concrete.I32.t, _) Result.t =
   Ok (res)
 
 let config_width () : (Kdo.Concrete.I32.t, _) Result.t =
-let res = Kdo.Concrete.I32.of_int32 (Game_config.width ()) in
-Ok (res)
+  let res = Kdo.Concrete.I32.of_int32 (Game_config.width ()) in
+  Ok (res)
 
 let config_difficulty () : (Kdo.Concrete.I32.t, _) Result.t =
-let res = Kdo.Concrete.I32.of_int32 (Game_config.difficulty ()) in
-Ok (res)
+  let res = Kdo.Concrete.I32.of_int32 (Game_config.difficulty ()) in
+  Ok (res)
+
+let read_int () : (Kdo.Concrete.I32.t, _) Result.t =
+  let input = read_int () in
+  let result = Kdo.Concrete.I32.of_int input in
+  Ok (result)
 
 let m =
   let open Kdo.Concrete.Extern_func in
@@ -65,6 +70,7 @@ let m =
       ("config_height", Extern_func (unit ^->. i32, config_height));
       ("config_width", Extern_func (unit ^->. i32, config_width));
       ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty))
+      ("read_int", Extern_func (unit ^->. i32, read_int))
     ]
   in
   {

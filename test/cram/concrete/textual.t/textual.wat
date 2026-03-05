@@ -10,6 +10,7 @@
   (func $config_height (import "ono" "config_height") (result i32))
   (func $config_width (import "ono" "config_width") (result i32))
   (func $config_difficulty (import "ono" "config_difficulty") (result i32))
+  (func $read_int (import "ono" "read_int") (result i32))
 
   (global $w (mut i32) (i32.const 15))
   (global $h (mut i32) (i32.const 15))
@@ -26,7 +27,7 @@
     call $config_difficulty
     call $genGrid
     call $clear_screen
-  )
+  )  
 
   (func $genGrid (param $n i32) (param $difficulty i32) (local $step i32) (local $random i32) (local $test i32)
     i32.const 0
@@ -169,30 +170,34 @@
     local.set $j
     (block $stopj
       (loop $loopj
-        (i32.eq (local.get $j) (global.get $w))
+        (i32.eq (local.get $j) (global.get $h))
         br_if $stopj
 
           i32.const 0
           local.set $i
+
           (block $stopi
             (loop $loopi
-              (i32.eq (local.get $i) (global.get $h))
+              (i32.eq (local.get $i) (global.get $w))
               br_if $stopi
 
               ;; body
-              ;; neighbours
+              ;; how many neighbours ?
               local.get $i
               local.get $j
               call $count_alive_neighbours
               local.set $ngbr_count
-              ;; i am alive
+              ;; am i alive ?
               (call $is_alive
                 (i32.load
-                  (call $2dCoordsTo1d (local.get $i) (local.get $j))
+                  (call $2dCoordsTo1d
+                    (local.get $i)
+                    (local.get $j)
+                  )
                 )
               )
               local.set $alive
-              ;; live
+              ;; so, do i live ?
               (if
                 (local.get $alive)
                 (then
@@ -203,30 +208,25 @@
                   local.set $live
                 )(else (i32.eq (i32.const 3) (local.get $ngbr_count)) (local.set $live))
               )
-
+              ;; luck or not
               local.get $i
               local.get $j
-              local.get $live
+              (i32.or
+                (i32.eqz (i32.rem_u (call $random_i32) (i32.const 10000)))
+                (local.get $live)
+              )
               call $update_mem
-
               ;; spawning
               (i32.eqz (local.get $live))
               call $cell_print
-              ;; print
-              (if
-                (i32.eq
-                  (i32.rem_u (local.get $i) (global.get $w))
-                  (i32.const 14))
-                (then
-                  call $newline
-                )
-              )
 
               (i32.add (local.get $i) (i32.const 1))
               local.set $i
               br $loopi
             )
           )
+
+        call $newline
 
         (i32.add (local.get $j) (i32.const 1))
         local.set $j
@@ -235,6 +235,9 @@
     )
   )
 
+
+
+  ;; add new data into mem
   (func $update_mem (param $i i32) (param $j i32) (param $live i32) (local $step i32)
 
     local.get $i
@@ -248,19 +251,20 @@
     (i32.store (local.get $step) (i32.eqz (local.get $live)))
   )
 
+  ;; replace old data with new data
   (func $update_mem_aux (local $prev_step i32) (local $step i32) (local $i i32) (local $j i32) (local $current i32)
     i32.const 0
     local.set $j
     (block $stopj
       (loop $loopj
-        (i32.eq (local.get $j) (global.get $w))
+        (i32.eq (local.get $j) (global.get $h))
         br_if $stopj
 
           i32.const 0
           local.set $i
           (block $stopi
             (loop $loopi
-              (i32.eq (local.get $i) (global.get $h))
+              (i32.eq (local.get $i) (global.get $w))
               br_if $stopi
 
               ;;body
@@ -305,7 +309,6 @@
         br $loop
       )
     )
-
   )
 
   (func $main
