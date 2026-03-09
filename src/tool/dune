@@ -6,6 +6,7 @@
  (libraries
   bos
   cmdliner
+  game_config
   fmt
   fmt.cli
   fmt.tty
