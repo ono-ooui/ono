@@ -4,15 +4,22 @@ Test the output of the man page:
          ono-concrete - This is a doc for concrete command
   
   SYNOPSIS
-         ono concrete [--seed=INT] [OPTION]… FILE
+         ono concrete [--config=FILE] [--seed=INT] [--use-graphical-window]
+         [OPTION]… FILE
   
   ARGUMENTS
          FILE (required)
              Source file to analyze.
   
   OPTIONS
+         --config=FILE
+             Set a config for the game from .sexp file.
+  
          --seed=INT
              Set the seed for random number generation.
+  
+         --use-graphical-window
+             Create a graphical window for the game.
   
   COMMON OPTIONS
          --color=WHEN (absent=auto)

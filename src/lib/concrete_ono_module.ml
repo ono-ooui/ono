@@ -54,6 +54,36 @@ let read_int () : (Kdo.Concrete.I32.t, _) Result.t =
   let result = Kdo.Concrete.I32.of_int input in
   Ok (result)
 
+let begin_drawing () : (unit, _) Result.t =
+  Graphics.Window.begin_drawing ();
+  Ok ()
+
+let end_drawing () : (unit, _) Result.t =
+  Graphics.Window.end_drawing ();
+  Ok ()
+
+let clear_window () : (unit, _) Result.t =
+  Graphics.Window.clear();
+  Ok ()
+
+let window_is_opened () : (Kdo.Concrete.I32.t, _) Result.t =
+  let res = Kdo.Concrete.I32.of_int (Graphics.Window.is_opened ()) in
+  Ok (res)
+
+let draw (alive : Kdo.Concrete.I32.t) (x : Kdo.Concrete.I32.t) (y : Kdo.Concrete.I32.t)
+(height : Kdo.Concrete.I32.t) (width : Kdo.Concrete.I32.t) : (unit, _) Result.t =
+  let live = Kdo.Concrete.I32.to_int alive in
+  let posX = Kdo.Concrete.I32.to_int x in
+  let posY = Kdo.Concrete.I32.to_int y in
+  let h = Kdo.Concrete.I32.to_int height in
+  let w = Kdo.Concrete.I32.to_int width in
+  Graphics.Window.draw live posX posY h w;
+  Ok ()
+
+let close_window () : (unit, _) Result.t =
+  Graphics.Window.close ();
+  Ok ()
+
 let m =
   let open Kdo.Concrete.Extern_func in
   let open Kdo.Concrete.Extern_func.Syntax in
@@ -70,7 +100,13 @@ let m =
       ("config_height", Extern_func (unit ^->. i32, config_height));
       ("config_width", Extern_func (unit ^->. i32, config_width));
       ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty));
-      ("read_int", Extern_func (unit ^->. i32, read_int))
+      ("read_int", Extern_func (unit ^->. i32, read_int));
+      ("begin_drawing", Extern_func (unit ^->. unit, begin_drawing));
+      ("end_drawing", Extern_func (unit ^->. unit, end_drawing));
+      ("clear_window", Extern_func (unit ^->. unit, clear_window));
+      ("window_is_opened", Extern_func (unit ^->. i32, window_is_opened));
+      ("draw", Extern_func (i32 ^->i32 ^-> i32 ^-> i32 ^-> i32 ^->. unit, draw));
+      ("close_window", Extern_func (unit ^->. unit, close_window))
     ]
   in
   {

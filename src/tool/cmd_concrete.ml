@@ -16,18 +16,25 @@ let configuration =
   Arg.(
     value & opt (some existing_file_conv) None & info ["config"] ~doc ~docv:"FILE")
 
+let graphics =
+  let doc = "Create a graphical window for the game." in
+  Arg.(
+    value & flag & info ["use-graphical-window"] ~doc)
+
 let term =
   let open Term.Syntax in
   let+ () = setup_log
   and+ source_file
   and+ seed
-  and+ configuration in
+  and+ configuration
+  and+ graphics in
   (match seed with
    | Some s -> Random.init s
    | None -> Random.self_init ());
   (match configuration with
    | Some file -> Game_config.load file;
    | None -> ());
+  if graphics then Graphics.Window.create ();
   Ono.Concrete_driver.run ~source_file |> function
   | Ok () -> Ok ()
   | Error e -> Error (`Msg (Kdo.R.err_to_string e))

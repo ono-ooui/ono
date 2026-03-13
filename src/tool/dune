@@ -7,6 +7,7 @@
   bos
   cmdliner
   game_config
+  graphics
   fmt
   fmt.cli
   fmt.tty
