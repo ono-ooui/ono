@@ -17,7 +17,8 @@ let end_drawing () : unit =
 let draw (alive : int) (x : int) (y : int) (height : int) (width : int) : unit =
   let h = get_screen_height ()/height in
   let w = get_screen_width ()/width in
-  if alive = 1 then draw_text "O" (x*w) (y*h) (min h w) Color.white
+  if alive = 1 then
+    Raylib.draw_rectangle (x * w) (y * h) w h Raylib.Color.white
 
 let clear () : unit =
   clear_background Color.black
