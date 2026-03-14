@@ -1,4 +1,4 @@
-val create : unit -> unit
+val create : int -> int -> unit
 val should_close : unit -> int
 val draw : int -> int -> int -> int -> int -> unit
 val clear : unit -> unit

@@ -21,12 +21,24 @@ let graphics =
   Arg.(
     value & flag & info ["use-graphical-window"] ~doc)
 
+let width =
+  let doc = "Define a width for --use-graphical-window option.\nDefault value is 800px" in
+  Arg.(
+    value & opt (some int) None & info ["width"] ~doc ~docv:"INT")
+
+let height =
+  let doc = "Define a height for --use-graphical-window option.\nDefault value is 600px" in
+  Arg.(
+    value & opt (some int) None & info ["height"] ~doc ~docv:"INT")
+
 let term =
   let open Term.Syntax in
   let+ () = setup_log
   and+ source_file
   and+ seed
   and+ configuration
+  and+ width
+  and+ height
   and+ graphics in
   (match seed with
    | Some s -> Random.init s
@@ -34,7 +46,16 @@ let term =
   (match configuration with
    | Some file -> Game_config.load file;
    | None -> ());
-  if graphics then Graphics.Window.create ();
+  if graphics then (
+    let w = (match width with
+    | Some w -> w
+    | None -> 800
+    ) in
+    let h = (match height with
+     | Some h -> h
+     | None -> 600
+    ) in
+    Graphics.Window.create w h);
   Ono.Concrete_driver.run ~source_file |> function
   | Ok () -> Ok ()
   | Error e -> Error (`Msg (Kdo.R.err_to_string e))

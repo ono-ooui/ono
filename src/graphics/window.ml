@@ -1,8 +1,8 @@
 open Raylib
 
-let create () : unit =
-  init_window 800 600 "Game_of_Life";
-  set_target_fps 30
+let create (width : int) (height : int) : unit =
+  init_window width height "Game_of_Life";
+  set_target_fps 60
 
 let should_close () : int =
   poll_input_events ();
@@ -17,7 +17,7 @@ let end_drawing () : unit =
 let draw (alive : int) (x : int) (y : int) (height : int) (width : int) : unit =
   let h = get_screen_height ()/height in
   let w = get_screen_width ()/width in
-  if alive = 1 then draw_text "O" (x*w) (y*h) (max h w) Color.white
+  if alive = 1 then draw_text "O" (x*w) (y*h) (min h w) Color.white
 
 let clear () : unit =
   clear_background Color.black
