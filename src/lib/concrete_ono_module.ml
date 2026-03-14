@@ -66,8 +66,8 @@ let clear_window () : (unit, _) Result.t =
   Graphics.Window.clear();
   Ok ()
 
-let window_is_opened () : (Kdo.Concrete.I32.t, _) Result.t =
-  let res = Kdo.Concrete.I32.of_int (Graphics.Window.is_opened ()) in
+let should_close () : (Kdo.Concrete.I32.t, _) Result.t =
+  let res = Kdo.Concrete.I32.of_int (Graphics.Window.should_close ()) in
   Ok (res)
 
 let draw (alive : Kdo.Concrete.I32.t) (x : Kdo.Concrete.I32.t) (y : Kdo.Concrete.I32.t)
@@ -83,6 +83,10 @@ let draw (alive : Kdo.Concrete.I32.t) (x : Kdo.Concrete.I32.t) (y : Kdo.Concrete
 let close_window () : (unit, _) Result.t =
   Graphics.Window.close ();
   Ok ()
+
+let window_opened () : (Kdo.Concrete.I32.t, _) Result.t =
+  let res = Kdo.Concrete.I32.of_int (Graphics.Window.initialized ()) in
+  Ok (res)
 
 let m =
   let open Kdo.Concrete.Extern_func in
@@ -104,9 +108,10 @@ let m =
       ("begin_drawing", Extern_func (unit ^->. unit, begin_drawing));
       ("end_drawing", Extern_func (unit ^->. unit, end_drawing));
       ("clear_window", Extern_func (unit ^->. unit, clear_window));
-      ("window_is_opened", Extern_func (unit ^->. i32, window_is_opened));
+      ("should_close", Extern_func (unit ^->. i32, should_close));
       ("draw", Extern_func (i32 ^->i32 ^-> i32 ^-> i32 ^-> i32 ^->. unit, draw));
-      ("close_window", Extern_func (unit ^->. unit, close_window))
+      ("close_window", Extern_func (unit ^->. unit, close_window));
+      ("window_opened", Extern_func (unit ^->. i32, window_opened))
     ]
   in
   {

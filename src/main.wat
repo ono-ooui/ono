@@ -14,9 +14,10 @@
   (func $begin_drawing (import "ono" "begin_drawing"))
   (func $end_drawing (import "ono" "end_drawing"))
   (func $clear_window (import "ono" "clear_window"))
-  (func $window_is_opened (import "ono" "window_is_opened") (result i32))
+  (func $should_close (import "ono" "should_close") (result i32))
   (func $draw (import "ono" "draw") (param i32) (param i32) (param i32) (param i32) (param i32))
   (func $close_window (import "ono" "close_window"))
+  (func $window_opened (import "ono" "window_opened") (result i32))
 
   (global $w i32 (i32.const 15))
   (global $h i32 (i32.const 15))
@@ -350,19 +351,23 @@
 
         call $update_mem_aux
 
-        call $window_is_opened
+        call $window_opened
         (if (then
-            call $clear_window
-            call $begin_drawing
-            call $draw_window
-            call $end_drawing
-          ) (else
-            call $close_window
-            br $block
+            call $should_close
+            (if (then
+                call $begin_drawing
+                call $clear_window
+                call $draw_window
+                call $end_drawing
+              ) (else
+                call $close_window
+                br $block
+              )
+            )
           )
         )
 
-        i32.const 2
+        i32.const 1
         call $sleep
         br $loop
       )
@@ -373,16 +378,19 @@
     call $init
     call $clear_screen
 
-    call $window_is_opened
+    call $window_opened
     (if (then
-        call $begin_drawing
-        call $clear_window
-        call $draw_window
-        call $end_drawing
+        call $should_close
+        (if (then
+            call $begin_drawing
+            call $clear_window
+            call $draw_window
+            call $end_drawing
+          )
+        )
       )
     )
-
-    i32.const 2
+    i32.const 1
     call $sleep
 
     call $gameLoop
