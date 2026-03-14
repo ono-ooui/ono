@@ -380,14 +380,10 @@
 
     call $window_opened
     (if (then
-        call $should_close
-        (if (then
-            call $begin_drawing
-            call $clear_window
-            call $draw_window
-            call $end_drawing
-          )
-        )
+        call $begin_drawing
+        call $clear_window
+        call $draw_window
+        call $end_drawing
       )
     )
     i32.const 1

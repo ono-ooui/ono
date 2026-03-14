@@ -49,11 +49,11 @@ let term =
   if graphics then (
     let w = (match width with
     | Some w -> w
-    | None -> 800
+    | None -> 1280
     ) in
     let h = (match height with
      | Some h -> h
-     | None -> 600
+     | None -> 720
     ) in
     Graphics.Window.create w h);
   Ono.Concrete_driver.run ~source_file |> function

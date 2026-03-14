@@ -15,10 +15,17 @@ let end_drawing () : unit =
   end_drawing ()
 
 let draw (alive : int) (x : int) (y : int) (height : int) (width : int) : unit =
-  let h = get_screen_height ()/height in
-  let w = get_screen_width ()/width in
+  let cell_size = min (get_screen_height () / height) (get_screen_width () / width) in
+  let offset_x = (get_screen_width () - (cell_size * width))/2 in
+  let offset_y = (get_screen_height () - (cell_size * height))/2 in
   if alive = 1 then
-    Raylib.draw_rectangle (x * w) (y * h) w h Raylib.Color.white
+    let rectangle_width =
+      if offset_x = 0 then (x * cell_size)
+      else ((x * cell_size) + offset_x) in
+    let rectangle_height =
+      if offset_y = 0 then (y * cell_size)
+      else ((y * cell_size) + offset_y) in
+    draw_rectangle rectangle_width rectangle_height cell_size cell_size Color.white
 
 let clear () : unit =
   clear_background Color.black
