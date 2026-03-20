@@ -4,15 +4,29 @@ Test the output of the man page:
          ono-concrete - This is a doc for concrete command
   
   SYNOPSIS
-         ono concrete [--seed=INT] [OPTION]… FILE
+         ono concrete [OPTION]… FILE
   
   ARGUMENTS
          FILE (required)
              Source file to analyze.
   
   OPTIONS
+         --config=FILE
+             Set a config for the game from .sexp file.
+  
+         --height=INT
+             Define a height for --use-graphical-window option. Default value
+             is 600px
+  
          --seed=INT
              Set the seed for random number generation.
+  
+         --use-graphical-window
+             Create a graphical window for the game.
+  
+         --width=INT
+             Define a width for --use-graphical-window option. Default value is
+             800px
   
   COMMON OPTIONS
          --color=WHEN (absent=auto)
@@ -69,3 +83,26 @@ Test the output of the man page:
   SEE ALSO
          ono(1)
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

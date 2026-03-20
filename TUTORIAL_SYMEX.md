@@ -36,7 +36,7 @@ Pour faire l'exécution symbolique de cette fonction, on va l'exécuter avec la 
 ```wat
 (module
   (func $f (param $x) (result i32)
-    
+
                     ;; []
     local.get $x    ;; [ ? ]
     i32.const 42    ;; [ 42; ? ]
@@ -64,7 +64,7 @@ La solution est simple : on va explorer les deux branches (par exemple, l'une ap
 ```wat
 (module
   (func $f (param $x) (result i32)
-    
+
                     ;; []
     local.get $x    ;; [ ? ]
     i32.const 42    ;; [ 42; ? ]
@@ -98,7 +98,7 @@ Reprenons notre exemple mais en indiquant la condition de chemin (*path conditio
 ```wat
 (module
   (func $f (param $x) (result i32)
-    
+
                     ;; []         | {} <- PC is empty
     local.get $x    ;; [ ? ]      | {}
     i32.const 42    ;; [ 42; ? ]  | {}
@@ -217,7 +217,7 @@ En Wasm, cela pourrait ressembler à cela :
 
 ```wat
 (module
-  
+
   ;; a function to create a symbol of type i32
   (func $sym_i32 (import "sym" "sym_i32") (result i32))
 
@@ -228,7 +228,7 @@ En Wasm, cela pourrait ressembler à cela :
   (func $test_f
                    ;; []           | {}
     call $sym_i32  ;; [ symbol_0 ] | {} <- a symbol was created by the engine and put on the stack, we don't know its value
-    
+
     ;; We are going to execute `$f` with `symbol_0` as input
     call $f
                    ;; ...
@@ -236,7 +236,7 @@ En Wasm, cela pourrait ressembler à cela :
   )
 
   (func $f (param $x) (result i32)
-    
+
                     ;; []                | {} <- PC is empty
     local.get $x    ;; [ symbol_0 ]      | {}
     i32.const 42    ;; [ 42; symbol_0 ]  | {}

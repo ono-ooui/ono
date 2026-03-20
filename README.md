@@ -13,7 +13,7 @@ Le projet compote 22 points, mais la note finale sera sur 20.
 Si vous obtenez 19 points, vous aurez donc 19/20. Si vous obtenez 20 points ou plus, vous obtiendrez 20/20.
 Une partie bonus est proposée à la fin, elle ne sera prise en compte que si vous avez réalisé l'entièreté du sujet.
 Le projet est à effectuer par groupes de trois ou quatre personnes.
-Les groupes seront fixés par Giovanni 
+Les groupes seront fixés par Giovanni
 
 ### Git et dépôt principal
 
@@ -21,7 +21,7 @@ Les groupes seront fixés par Giovanni
 2. Écrivez des messages de commit *clairs* et *informatifs*, n'en faites pas trop : ne faites pas plusieurs paragraphes si le changement peut être décrit en cinq mots.
 3. À chaque Pull-Request *significative*, ajoutez une ligne au fichier [CHANGES.md] qui décrit les changements effectués, évitez de donner trop de détails, je vous conseille de lire [keepachangelog.com].
 4. Au début de chaque TP, faite une *release* de votre projet. La *release* prendra la forme d'un *tag* Git, qui devra être poussé sur le dépôt principal. Pensez bien à mettre à jour le fichier [CHANGES.md] avant de publier la nouvelle version.
-5. À la fin du projet, vous devrez écrire un fichier `REPORT.md` qui décrira ce que vous avez fait, ce qui a réussi, les points subtils de votre projet, les difficultés rencontrées et ce qui n'a pas fonctionné, 
+5. À la fin du projet, vous devrez écrire un fichier `REPORT.md` qui décrira ce que vous avez fait, ce qui a réussi, les points subtils de votre projet, les difficultés rencontrées et ce qui n'a pas fonctionné,
 
 ### OCaml
 

@@ -37,7 +37,7 @@ Un module peut contenir des fonctions qui peuvent également être nommées :
 
 ```wat
 (module $useless_module
-  
+
   ;; I have a function now:
   (func $one)
 
@@ -277,7 +277,7 @@ Celle-ci va appeler la fonction `$square_square` avec la valeur `4`, et jeter le
     i32.mul
   )
 
-  (func $square_square (param $x i32) (result i32)              
+  (func $square_square (param $x i32) (result i32)
     local.get $x
     call $square
     call $square
@@ -297,7 +297,7 @@ Il est maintenant possible d'exécuter notre programme Wasm ! Voilà ce que cela
 
 ```shell-session
 $ owi run file.wat -v
-owi: [INFO] parsing      ...             
+owi: [INFO] parsing      ...
 owi: [INFO] checking     ...
 owi: [INFO] typechecking ...
 owi: [INFO] linking      ...
@@ -364,7 +364,7 @@ Voici deux exemples déjà présentés, mais utilisant cette fois les identifian
   )
 
   ;; function 1
-  (func (param i32) (result i32)              
+  (func (param i32) (result i32)
     local.get 0 ;; we get our first parameter
     call 0 ;; this is a call to function 0
     call 0
@@ -411,7 +411,7 @@ En réalité, il est possible d'utiliser les deux à la fois. Par exemple, on pe
 ```wat
 (module
   (func $f (param $x i32) (result i32)
-    local.get $x 
+    local.get $x
     local.get 0  ;; same as local.get $x
     i32.add
     call $f
@@ -442,7 +442,7 @@ Si celle-ci vaut `0`, alors on ne rentre pas dans le bloc et on "saute" après l
     ;; if `$cond` is not `0`, we go to INSIDE_TRUE, otherwise we go to AFTER_IF
     (if (then
       ;; <- INSIDE_TRUE
-      
+
       ;; some code
       i32.const 42
       drop
@@ -478,12 +478,12 @@ Lorsqu'elle est présente, c'est cette sous-expression qui sera exécutée lorsq
 ```wat
 (module
   (func (param $cond i32) (result i32)
-    
+
     local.get $cond
 
-    (if (then 
+    (if (then
       i32.const 42
-    ) (else 
+    ) (else
       i32.const 34
     ))
   )
@@ -560,7 +560,7 @@ Et voici plusieurs version Wasm possibles :
 (module
 
   (func $fib_a (param $n i32) (result i32)
-    
+
     (i32.lt_s (local.get $n) (i32.const)) ;; [ $n < 2 ]
 
     (if (then
@@ -585,7 +585,7 @@ Et voici plusieurs version Wasm possibles :
 
       (i32.lt_s (local.get $n) (i32.const)) ;; [ $n < 2 ]
 
-      ;; if ($n < 2) is true, we enter the block, otherwise we jump after $base_case, i.e. at BASE_CASE 
+      ;; if ($n < 2) is true, we enter the block, otherwise we jump after $base_case, i.e. at BASE_CASE
       (if (then
         br $base_case ;; go to BASE_CASE
       ))
@@ -611,7 +611,7 @@ Et voici plusieurs version Wasm possibles :
 
       (i32.lt_s (local.get $n) (i32.const)) ;; [ $n < 2 ]
 
-      ;; if ($n < 2) is true we jump after $base_case, i.e. at BASE_CASE 
+      ;; if ($n < 2) is true we jump after $base_case, i.e. at BASE_CASE
       br_if $base_case
 
       ;; n >= 2, we need to compute fib(n-1) + fib(n - 2):
@@ -627,7 +627,7 @@ Et voici plusieurs version Wasm possibles :
     ;; <- BASE_CASE
     ;; we know that n < 2 so we can simply return n
     local.get $n
-  
+
   )
 )
 ```
