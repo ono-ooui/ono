@@ -19,14 +19,18 @@
   (func $close_window (import "ono" "close_window"))
   (func $window_opened (import "ono" "window_opened") (result i32))
 
-  (global $w i32 (i32.const 15))
-  (global $h i32 (i32.const 15))
+  (global $w (mut i32) (i32.const 0))
+  (global $h (mut i32) (i32.const 0))
   (memory 1)
 
   (func $init
+    call $config_width
+    global.set $w
+    call $config_height
+    global.set $h
     (i32.mul (global.get $w) (global.get $h))
     ;; reduce for more foxes
-    (i32.const 5) ;; difficulty
+    call $config_difficulty ;; difficulty
     call $genGrid
     call $clear_screen
   )

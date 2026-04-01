@@ -2,9 +2,9 @@
 open Sexplib.Std
 
 type t = {
-  height : int32;
-  width : int32;
-  difficulty : int32;
+  height : int32 option [@sexp.option];
+  width : int32 option [@sexp.option];
+  difficulty : int32 option [@sexp.option];
 } [@@deriving sexp]
 
 let current_config : t option ref = ref None
@@ -14,20 +14,20 @@ let load (file : Fpath.t) : unit =
   let config = t_of_sexp sexp in
   current_config := Some config
 
-let height () : int32 =
+let height () : int32 option =
   (match !current_config with
     | Some cc -> cc.height
-    | None -> 5l
+    | None -> None
   )
 
-let width () : int32 =
+let width () : int32 option =
   (match !current_config with
     | Some cc -> cc.width
-    | None -> 5l
+    | None -> None
   )
 
-let difficulty () : int32 =
+let difficulty () : int32 option =
   (match !current_config with
     | Some cc -> cc.difficulty
-    | None -> 10l
+    | None -> None
   )
