@@ -68,7 +68,7 @@ let config_difficulty () : (Kdo.Concrete.I32.t, _) Result.t =
       let res = Kdo.Concrete.I32.of_int32 value in
       Ok (res)
     | None ->
-      Logs.app (fun m -> m "Please enter a value for game difficulty.");
+      Logs.app (fun m -> m "Please enter a positive value for game difficulty.");
       let res = Kdo.Concrete.I32.of_int (read_int ()) in
       Ok (res)
   )
