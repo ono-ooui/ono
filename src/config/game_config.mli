@@ -1,9 +1,9 @@
 (* config structure. *)
 
 type t = {
-  height : int32 option [@default None];
-  width : int32 option [@default None];
-  difficulty : int32 option [@default None];
+  height : int32 option [@sexp.option];
+  width : int32 option [@sexp.option];
+  difficulty : int32 option [@sexp.option];
 } [@@deriving sexp]
 
 val load : Fpath.t -> unit

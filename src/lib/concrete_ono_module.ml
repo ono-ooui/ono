@@ -69,6 +69,7 @@ let config_difficulty () : (Kdo.Concrete.I32.t, _) Result.t =
       Ok (res)
     | None ->
       Logs.app (fun m -> m "Please enter a positive value for game difficulty.");
+      Logs.app (fun m -> m "(Lower value increase amount of fox at the beginning)");
       let res = Kdo.Concrete.I32.of_int (read_int ()) in
       Ok (res)
   )
