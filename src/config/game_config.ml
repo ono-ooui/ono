@@ -5,6 +5,7 @@ type t = {
   height : int32 option [@sexp.option];
   width : int32 option [@sexp.option];
   difficulty : int32 option [@sexp.option];
+  steps : int32 option [@sexp.option];
 } [@@deriving sexp]
 
 let current_config : t option ref = ref None
@@ -31,3 +32,15 @@ let difficulty () : int32 option =
     | Some cc -> cc.difficulty
     | None -> None
   )
+
+  let set_steps (value : int32 option) : unit =
+    (match !current_config with
+      | Some cc -> current_config := Some {cc with steps = value }
+      | None -> current_config := Some { width = None; height = None; difficulty = None; steps = value }
+    )
+
+  let steps () : int32 option =
+    (match !current_config with
+     | Some cc -> cc.steps
+     | None -> None
+    )

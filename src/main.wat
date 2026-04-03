@@ -10,6 +10,7 @@
   (func $config_height (import "ono" "config_height") (result i32))
   (func $config_width (import "ono" "config_width") (result i32))
   (func $config_difficulty (import "ono" "config_difficulty") (result i32))
+  (func $config_steps (import "ono" "config_steps") (result i32))
   (func $read_int (import "ono" "read_int") (result i32))
   (func $begin_drawing (import "ono" "begin_drawing"))
   (func $end_drawing (import "ono" "end_drawing"))
@@ -21,6 +22,7 @@
 
   (global $w (mut i32) (i32.const 0))
   (global $h (mut i32) (i32.const 0))
+  (global $steps (mut i32) (i32.const 0))
   (memory 1)
 
   (func $init
@@ -31,6 +33,8 @@
     (i32.mul (global.get $w) (global.get $h))
     ;; reduce for more foxes
     call $config_difficulty ;; difficulty
+    call $config_steps
+    global.set $steps
     call $genGrid
     call $clear_screen
   )
@@ -349,7 +353,10 @@
   (func $gameLoop
     (block $block
       (loop $loop
-
+        (i32.eq (global.get $steps) (i32.const 0))
+        br_if $block
+        (i32.sub (global.get $steps) (i32.const 1))
+        global.set $steps
         call $step
         call $clear_screen
 

@@ -16,17 +16,21 @@ Test the output of the man page:
   
          --height=INT
              Define a height for --use-graphical-window option. Default value
-             is 600px
+             is 600px.
   
          --seed=INT
              Set the seed for random number generation.
+  
+         --steps=INT
+             Define the amount of steps the game will do. Negative values will
+             be ignored.
   
          --use-graphical-window
              Create a graphical window for the game.
   
          --width=INT
              Define a width for --use-graphical-window option. Default value is
-             800px
+             800px.
   
   COMMON OPTIONS
          --color=WHEN (absent=auto)

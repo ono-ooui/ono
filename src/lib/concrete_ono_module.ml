@@ -74,6 +74,17 @@ let config_difficulty () : (Kdo.Concrete.I32.t, _) Result.t =
       Ok (res)
   )
 
+let config_steps () : (Kdo.Concrete.I32.t, _) Result.t =
+  let steps = Game_config.steps () in
+  (match steps with
+   | Some value ->
+    let res = Kdo.Concrete.I32.of_int32 value in
+    Ok (res)
+   | None ->
+    let res = Kdo.Concrete.I32.of_int (-1) in
+    Ok (res)
+  )
+
 let read_int () : (Kdo.Concrete.I32.t, _) Result.t =
   let input = read_int () in
   let result = Kdo.Concrete.I32.of_int input in
@@ -128,6 +139,7 @@ let m =
       ("clear_screen", Extern_func (unit ^->. unit, clear_screen));
       ("config_height", Extern_func (unit ^->. i32, config_height));
       ("config_width", Extern_func (unit ^->. i32, config_width));
+      ("config_steps", Extern_func (unit ^->. i32, config_steps));
       ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty));
       ("read_int", Extern_func (unit ^->. i32, read_int));
       ("begin_drawing", Extern_func (unit ^->. unit, begin_drawing));

@@ -3,4 +3,5 @@ Read test_config.sexp and print the config.
   42
   42
   42
+  42
   OK!
