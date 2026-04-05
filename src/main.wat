@@ -355,8 +355,14 @@
       (loop $loop
         (i32.eq (global.get $steps) (i32.const 0))
         br_if $block
-        (i32.sub (global.get $steps) (i32.const 1))
-        global.set $steps
+
+        (if (i32.gt_s (global.get $steps) (i32.const 0))
+          (then
+            (i32.sub (global.get $steps) (i32.const 1))
+            global.set $steps
+          )
+        )
+
         call $step
         call $clear_screen
 
@@ -397,10 +403,24 @@
         call $end_drawing
       )
     )
+
     i32.const 1
     call $sleep
 
     call $gameLoop
+
+    call $window_opened
+    (if (then
+        (block $close
+          (loop $wait
+            call $should_close
+            (if (then br $wait)
+            (else br $close))
+          )
+        )
+        call $close_window
+      )
+    )
   )
 
   (start $main)
