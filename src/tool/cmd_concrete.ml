@@ -36,6 +36,11 @@ let steps =
   Arg.(
     value & opt (some int) None & info ["steps"] ~doc ~docv:"INT")
 
+let print_steps =
+  let doc = "The last steps to display." in
+  Arg. (
+    value & opt (some int) None & info ["print-steps"] ~doc ~docv:"INT")
+
 let term =
   let open Term.Syntax in
   let+ () = setup_log
@@ -43,6 +48,7 @@ let term =
   and+ seed
   and+ configuration
   and+ steps
+  and+ print_steps
   and+ width
   and+ height
   and+ graphics in
@@ -56,6 +62,10 @@ let term =
   );
   (match steps with
    | Some s -> Game_config.set_steps (Some  (Int32.of_int s))
+   | None -> ()
+  );
+  (match print_steps with
+   | Some p -> Game_config.set_prints (Some (Int32.of_int p))
    | None -> ()
   );
   if graphics then (

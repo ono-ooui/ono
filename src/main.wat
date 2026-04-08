@@ -7,10 +7,12 @@
   (func $is_alive (import "ono" "is_alive") (param i32) (result i32))
   (func $clear_screen (import "ono" "clear_screen"))
   (func $newline (import "ono" "newline"))
+  (func $empty_buffer (import "ono" "empty_buffer"))
   (func $config_height (import "ono" "config_height") (result i32))
   (func $config_width (import "ono" "config_width") (result i32))
   (func $config_difficulty (import "ono" "config_difficulty") (result i32))
   (func $config_steps (import "ono" "config_steps") (result i32))
+  (func $config_prints (import "ono" "config_prints") (result i32))
   (func $read_int (import "ono" "read_int") (result i32))
   (func $begin_drawing (import "ono" "begin_drawing"))
   (func $end_drawing (import "ono" "end_drawing"))
@@ -23,9 +25,30 @@
   (global $w (mut i32) (i32.const 0))
   (global $h (mut i32) (i32.const 0))
   (global $steps (mut i32) (i32.const 0))
+  (global $print_steps (mut i32) (i32.const 0))
   (memory 1)
 
-  (func $init
+  (func $display (result i32) (local $res i32)
+    i32.const 1
+    local.set $res
+    (if (i32.lt_s (global.get $print_steps) (i32.const 0))
+      (then call $clear_screen)
+      (else (if ( i32.gt_s (global.get $steps) (i32.const 0))
+          (then (if (i32.gt_s (global.get $print_steps) (global.get $steps))
+            (then call $clear_screen)
+            (else
+              call $empty_buffer
+              i32.const 0
+              local.set $res
+            ))
+          ) (else call $clear_screen)
+        )
+      )
+    )
+    local.get $res
+  )
+
+  (func $init (result i32)
     call $config_width
     global.set $w
     call $config_height
@@ -35,8 +58,11 @@
     call $config_difficulty ;; difficulty
     call $config_steps
     global.set $steps
+    call $config_prints
+    global.set $print_steps
     call $genGrid
-    call $clear_screen
+    call $newline
+    call $display
   )
 
   (func $genGrid (param $n i32) (param $difficulty i32) (local $step i32) (local $random i32) (local $test i32)
@@ -364,28 +390,31 @@
         )
 
         call $step
-        call $clear_screen
 
         call $update_mem_aux
 
-        call $window_opened
+        call $display
         (if (then
-            call $should_close
+            call $window_opened
             (if (then
-                call $begin_drawing
-                call $clear_window
-                call $draw_window
-                call $end_drawing
-              ) (else
-                call $close_window
-                br $block
+                call $should_close
+                (if (then
+                    call $begin_drawing
+                    call $clear_window
+                    call $draw_window
+                    call $end_drawing
+                  ) (else
+                    call $close_window
+                    br $block
+                  )
+                )
               )
             )
-          )
+            i32.const 1
+            call $sleep
+          ) (else call $empty_buffer)
         )
 
-        i32.const 1
-        call $sleep
         br $loop
       )
     )
@@ -393,19 +422,20 @@
 
   (func $main
     call $init
-    call $clear_screen
 
-    call $window_opened
     (if (then
-        call $begin_drawing
-        call $clear_window
-        call $draw_window
-        call $end_drawing
+        call $window_opened
+        (if (then
+            call $begin_drawing
+            call $clear_window
+            call $draw_window
+            call $end_drawing
+          )
+        )
+        i32.const 2
+        call $sleep
       )
     )
-
-    i32.const 1
-    call $sleep
 
     call $gameLoop
 

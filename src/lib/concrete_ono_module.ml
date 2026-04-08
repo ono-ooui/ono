@@ -37,6 +37,10 @@ let clear_screen () : (unit, _) Result.t =
   Buffer.clear buf;
   Ok ()
 
+let empty_buffer () : (unit, _) Result.t =
+  Buffer.clear buf;
+  Ok ()
+
 let config_height () : (Kdo.Concrete.I32.t, _) Result.t =
   let height = Game_config.height () in
   (match height with
@@ -76,6 +80,17 @@ let config_difficulty () : (Kdo.Concrete.I32.t, _) Result.t =
 
 let config_steps () : (Kdo.Concrete.I32.t, _) Result.t =
   let steps = Game_config.steps () in
+  (match steps with
+   | Some value ->
+    let res = Kdo.Concrete.I32.of_int32 value in
+    Ok (res)
+   | None ->
+    let res = Kdo.Concrete.I32.of_int (-1) in
+    Ok (res)
+  )
+
+let config_prints () : (Kdo.Concrete.I32.t, _) Result.t =
+  let steps = Game_config.prints () in
   (match steps with
    | Some value ->
     let res = Kdo.Concrete.I32.of_int32 value in
@@ -137,9 +152,11 @@ let m =
       ("is_alive",   Extern_func (i32  ^->. i32, is_alive));
       ("newline",      Extern_func (unit ^->. unit, newline));
       ("clear_screen", Extern_func (unit ^->. unit, clear_screen));
+      ("empty_buffer", Extern_func (unit ^->. unit, empty_buffer));
       ("config_height", Extern_func (unit ^->. i32, config_height));
       ("config_width", Extern_func (unit ^->. i32, config_width));
       ("config_steps", Extern_func (unit ^->. i32, config_steps));
+      ("config_prints", Extern_func (unit ^->. i32, config_prints));
       ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty));
       ("read_int", Extern_func (unit ^->. i32, read_int));
       ("begin_drawing", Extern_func (unit ^->. unit, begin_drawing));

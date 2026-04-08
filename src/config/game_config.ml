@@ -6,6 +6,7 @@ type t = {
   width : int32 option [@sexp.option];
   difficulty : int32 option [@sexp.option];
   steps : int32 option [@sexp.option];
+  prints : int32 option [@sexp.option];
 } [@@deriving sexp]
 
 let current_config : t option ref = ref None
@@ -36,7 +37,7 @@ let difficulty () : int32 option =
   let set_steps (value : int32 option) : unit =
     (match !current_config with
       | Some cc -> current_config := Some {cc with steps = value }
-      | None -> current_config := Some { width = None; height = None; difficulty = None; steps = value }
+      | None -> current_config := Some { width = None; height = None; difficulty = None; steps = value; prints = None }
     )
 
   let steps () : int32 option =
@@ -44,3 +45,15 @@ let difficulty () : int32 option =
      | Some cc -> cc.steps
      | None -> None
     )
+
+let set_prints (value : int32 option) : unit =
+  (match !current_config with
+    | Some cc -> current_config := Some {cc with prints = value }
+    | None -> current_config := Some { width = None; height = None; difficulty = None; steps = None; prints = value }
+  )
+
+let prints () : int32 option =
+  (match !current_config with
+   | Some cc -> cc.prints
+   | None -> None
+  )

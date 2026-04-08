@@ -18,6 +18,9 @@ Test the output of the man page:
              Define a height for --use-graphical-window option. Default value
              is 600px.
   
+         --print-steps=INT
+             The last steps to display.
+  
          --seed=INT
              Set the seed for random number generation.
   
