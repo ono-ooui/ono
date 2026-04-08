@@ -34,7 +34,7 @@
     (if (i32.lt_s (global.get $print_steps) (i32.const 0))
       (then call $clear_screen)
       (else (if ( i32.gt_s (global.get $steps) (i32.const 0))
-          (then (if (i32.gt_s (global.get $print_steps) (global.get $steps))
+          (then (if (i32.ge_s (global.get $print_steps) (global.get $steps))
             (then call $clear_screen)
             (else
               call $empty_buffer
@@ -382,13 +382,6 @@
         (i32.eq (global.get $steps) (i32.const 0))
         br_if $block
 
-        (if (i32.gt_s (global.get $steps) (i32.const 0))
-          (then
-            (i32.sub (global.get $steps) (i32.const 1))
-            global.set $steps
-          )
-        )
-
         call $step
 
         call $update_mem_aux
@@ -413,6 +406,13 @@
             i32.const 1
             call $sleep
           ) (else call $empty_buffer)
+        )
+
+        (if (i32.gt_s (global.get $steps) (i32.const 0))
+          (then
+            (i32.sub (global.get $steps) (i32.const 1))
+            global.set $steps
+          )
         )
 
         br $loop
