@@ -332,7 +332,7 @@
     )
   )
 
-  (func $draw_window (local $i i32) (local $j i32) (local $alive i32)
+  (func $draw_window (local $i i32) (local $j i32)
     i32.const 0
     local.set $j
     (block $stopj
@@ -354,9 +354,6 @@
               i32.load
 
               call $is_alive
-              local.set $alive
-
-              local.get $alive
               local.get $i
               local.get $j
               global.get $h
