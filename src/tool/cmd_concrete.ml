@@ -22,14 +22,24 @@ let graphics =
     value & flag & info ["use-graphical-window"] ~doc)
 
 let width =
-  let doc = "Define a width for --use-graphical-window option.\nDefault value is 800px" in
+  let doc = "Define a width for --use-graphical-window option. Default value is 800px." in
   Arg.(
     value & opt (some int) None & info ["width"] ~doc ~docv:"INT")
 
 let height =
-  let doc = "Define a height for --use-graphical-window option.\nDefault value is 600px" in
+  let doc = "Define a height for --use-graphical-window option. Default value is 600px." in
   Arg.(
     value & opt (some int) None & info ["height"] ~doc ~docv:"INT")
+
+let steps =
+  let doc = "Define the amount of steps the game will do. Negative values will be ignored." in
+  Arg.(
+    value & opt (some int) None & info ["steps"] ~doc ~docv:"INT")
+
+let print_steps =
+  let doc = "The last steps to display." in
+  Arg. (
+    value & opt (some int) None & info ["print-steps"] ~doc ~docv:"INT")
 
 let term =
   let open Term.Syntax in
@@ -37,25 +47,38 @@ let term =
   and+ source_file
   and+ seed
   and+ configuration
+  and+ steps
+  and+ print_steps
   and+ width
   and+ height
   and+ graphics in
   (match seed with
    | Some s -> Random.init s
-   | None -> Random.self_init ());
+   | None -> Random.self_init ()
+  );
   (match configuration with
    | Some file -> Game_config.load file;
-   | None -> ());
+   | None -> ()
+  );
+  (match steps with
+   | Some s -> Game_config.set_steps (Some  (Int32.of_int s))
+   | None -> ()
+  );
+  (match print_steps with
+   | Some p -> Game_config.set_prints (Some (Int32.of_int p))
+   | None -> ()
+  );
   if graphics then (
     let w = (match width with
-    | Some w -> w
-    | None -> 1280
+     | Some w -> w
+     | None -> 1280
     ) in
     let h = (match height with
      | Some h -> h
      | None -> 720
     ) in
-    Graphics.Window.create w h);
+    Graphics.Window.create w h
+  );
   Ono.Concrete_driver.run ~source_file |> function
   | Ok () -> Ok ()
   | Error e -> Error (`Msg (Kdo.R.err_to_string e))

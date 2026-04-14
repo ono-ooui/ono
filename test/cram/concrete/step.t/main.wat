@@ -1,8 +1,7 @@
 (module
-
+  ;; SLEEP HAVE BEEN REMOVED FROM THE FILE FOR TEST
   (func $random_i32 (import "ono" "random_i32") (result i32))
   (func $print_i32 (import "ono" "print_i32") (param i32))
-  (func $sleep (import "ono" "sleep") (param i32))
   (func $cell_print (import "ono" "cell_print") (param i32))
   (func $is_alive (import "ono" "is_alive") (param i32) (result i32))
   (func $clear_screen (import "ono" "clear_screen"))
@@ -332,7 +331,7 @@
     )
   )
 
-  (func $draw_window (local $i i32) (local $j i32)
+  (func $draw_window (local $i i32) (local $j i32) (local $alive i32)
     i32.const 0
     local.set $j
     (block $stopj
@@ -354,6 +353,9 @@
               i32.load
 
               call $is_alive
+              local.set $alive
+
+              local.get $alive
               local.get $i
               local.get $j
               global.get $h
@@ -400,8 +402,6 @@
                 )
               )
             )
-            i32.const 1
-            call $sleep
           ) (else call $empty_buffer)
         )
 
@@ -429,8 +429,6 @@
             call $end_drawing
           )
         )
-        i32.const 2
-        call $sleep
       )
     )
 

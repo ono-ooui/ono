@@ -2,9 +2,11 @@
 open Sexplib.Std
 
 type t = {
-  height : int32;
-  width : int32;
-  difficulty : int32;
+  height : int32 option [@sexp.option];
+  width : int32 option [@sexp.option];
+  difficulty : int32 option [@sexp.option];
+  steps : int32 option [@sexp.option];
+  prints : int32 option [@sexp.option];
 } [@@deriving sexp]
 
 let current_config : t option ref = ref None
@@ -14,20 +16,44 @@ let load (file : Fpath.t) : unit =
   let config = t_of_sexp sexp in
   current_config := Some config
 
-let height () : int32 =
+let height () : int32 option =
   (match !current_config with
     | Some cc -> cc.height
-    | None -> 5l
+    | None -> None
   )
 
-let width () : int32 =
+let width () : int32 option =
   (match !current_config with
     | Some cc -> cc.width
-    | None -> 5l
+    | None -> None
   )
 
-let difficulty () : int32 =
+let difficulty () : int32 option =
   (match !current_config with
     | Some cc -> cc.difficulty
-    | None -> 10l
+    | None -> None
+  )
+
+  let set_steps (value : int32 option) : unit =
+    (match !current_config with
+      | Some cc -> current_config := Some {cc with steps = value }
+      | None -> current_config := Some { width = None; height = None; difficulty = None; steps = value; prints = None }
+    )
+
+  let steps () : int32 option =
+    (match !current_config with
+     | Some cc -> cc.steps
+     | None -> None
+    )
+
+let set_prints (value : int32 option) : unit =
+  (match !current_config with
+    | Some cc -> current_config := Some {cc with prints = value }
+    | None -> current_config := Some { width = None; height = None; difficulty = None; steps = None; prints = value }
+  )
+
+let prints () : int32 option =
+  (match !current_config with
+   | Some cc -> cc.prints
+   | None -> None
   )
