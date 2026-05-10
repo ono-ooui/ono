@@ -22,12 +22,12 @@ let graphics =
     value & flag & info ["use-graphical-window"] ~doc)
 
 let width =
-  let doc = "Define a width for --use-graphical-window option. Default value is 800px." in
+  let doc = "Define a width for --use-graphical-window option. Default value is 1280px." in
   Arg.(
     value & opt (some int) None & info ["width"] ~doc ~docv:"INT")
 
 let height =
-  let doc = "Define a height for --use-graphical-window option. Default value is 600px." in
+  let doc = "Define a height for --use-graphical-window option. Default value is 720px." in
   Arg.(
     value & opt (some int) None & info ["height"] ~doc ~docv:"INT")
 
