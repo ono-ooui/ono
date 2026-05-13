@@ -1,7 +1,8 @@
 # Paquets opam ajoutés :
 
 ppx_sexp_conv v0.17.1\
-sexplib       v0.17.0
+sexplib       v0.17.0\
+raylib        1.6.0
 
 # Fichier de configuration :
 
