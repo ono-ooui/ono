@@ -40,8 +40,11 @@ Les options ont la priorité sur la configuration (car chargées après la confi
 
 ## Exécution :
 
+opam switch create . --deps-only
+eval $(opam env)\
+opam install . --with-test --with-dev-setup --with-doc --deps-only\
 dune build\
 dune install\
-ono concrete src/main.wat --seed=42 --config src/config/config.sexp --steps=6 --print-steps=3 --use-graphical-window --height=800 --width=800
+ono concrete src/main.wat --seed=42 --config src/config/config.sexp --use-graphical-window --height=800 --width=800
 
 # Symbolic :
