@@ -49,7 +49,8 @@ ono concrete src/main.wat --seed=42 --config src/config/config.sexp --use-graphi
 
 # Symbolic :
 
-Solveur de polynome partiellement implementé.
+Solveur de Polynôme implémenté.\
+Génération de configuation non implémentée.
 
 ## Exécution :
 
@@ -58,9 +59,13 @@ eval $(opam env)\
 opam install . --with-test --with-dev-setup --with-doc --deps-only\
 dune build\
 dune install\
-ono symbolic ./test/cram/symbolic/poly.t/poly.wat\
-(saisir manuellement les valeurs des polynômes
-exemple: 1 [entrer] -7 [entrer] 14 [entrer] -8 [entrer])
+ono symbolic test/cram/symbolic/poly.t/poly.wat -vv
+
+Puis entrez les valeurs a, b, c, d une par une :\
+Exemples de polynômes :
+- 3 racines : 1 -7 14 -8
+- 2 racines : 1 0 -3 2
+- 1 racine : 1 -1 1 -1
 
 # Difficultés
 
