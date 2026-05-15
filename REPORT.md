@@ -61,7 +61,7 @@ dune build\
 dune install\
 ono symbolic test/cram/symbolic/poly.t/poly.wat -vv
 
-Puis entrez les valeurs a, b, c, d une par une :
+Puis entrez les valeurs a, b, c, d une par une :\
 Exemples de polynômes :
 - 3 racines : 1 -7 14 -8
 - 2 racines : 1 0 -3 2
