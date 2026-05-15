@@ -100,6 +100,32 @@ let config_prints () : (Kdo.Concrete.I32.t, _) Result.t =
     Ok (res)
   )
 
+let config_cells_count () : (Kdo.Concrete.I32.t, _) Result.t =
+  match Game_config.cells () with
+  | Some l -> Ok (Kdo.Concrete.I32.of_int (List.length l))
+  | None -> Ok Kdo.Concrete.I32.zero
+
+let config_cells_x (i : Kdo.Concrete.I32.t) : (Kdo.Concrete.I32.t, _) Result.t =
+  let idx = Kdo.Concrete.I32.to_int i in
+  match Game_config.cells () with
+  | Some l when idx < List.length l -> 
+      let (x, _, _) = List.nth l idx in Ok (Kdo.Concrete.I32.of_int32 x)
+  | _ -> Ok (Kdo.Concrete.I32.of_int (-1))
+
+let config_cells_y (i : Kdo.Concrete.I32.t) : (Kdo.Concrete.I32.t, _) Result.t =
+  let idx = Kdo.Concrete.I32.to_int i in
+  match Game_config.cells () with
+  | Some l when idx < List.length l -> 
+      let (_, y, _) = List.nth l idx in Ok (Kdo.Concrete.I32.of_int32 y)
+  | _ -> Ok (Kdo.Concrete.I32.of_int (-1))
+
+let config_cells_v (i : Kdo.Concrete.I32.t) : (Kdo.Concrete.I32.t, _) Result.t =
+  let idx = Kdo.Concrete.I32.to_int i in
+  match Game_config.cells () with
+  | Some l when idx < List.length l -> 
+      let (_, _, v) = List.nth l idx in Ok (Kdo.Concrete.I32.of_int32 v)
+  | _ -> Ok (Kdo.Concrete.I32.of_int (-1))
+
 let read_int () : (Kdo.Concrete.I32.t, _) Result.t =
   let input = read_int () in
   let result = Kdo.Concrete.I32.of_int input in
@@ -157,6 +183,10 @@ let m =
       ("config_width", Extern_func (unit ^->. i32, config_width));
       ("config_steps", Extern_func (unit ^->. i32, config_steps));
       ("config_prints", Extern_func (unit ^->. i32, config_prints));
+      ("config_cells_count", Extern_func (unit ^->. i32, config_cells_count));
+      ("config_cells_x", Extern_func (i32 ^->. i32, config_cells_x));
+      ("config_cells_y", Extern_func (i32 ^->. i32, config_cells_y));
+      ("config_cells_v", Extern_func (i32 ^->. i32, config_cells_v));
       ("config_difficulty", Extern_func (unit ^->. i32, config_difficulty));
       ("read_int", Extern_func (unit ^->. i32, read_int));
       ("begin_drawing", Extern_func (unit ^->. unit, begin_drawing));

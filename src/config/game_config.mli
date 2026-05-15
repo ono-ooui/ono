@@ -6,6 +6,7 @@ type t = {
   difficulty : int32 option [@sexp.option];
   steps : int32 option [@sexp.option];
   prints : int32 option [@sexp.option];
+  cells : (int32 * int32 * int32) list option [@sexp.option];
 } [@@deriving sexp]
 
 val load : Fpath.t -> unit
@@ -16,3 +17,4 @@ val set_steps : int32 option -> unit
 val steps : unit -> int32 option
 val set_prints : int32 option -> unit
 val prints : unit -> int32 option
+val cells : unit -> (int32 * int32 * int32) list option

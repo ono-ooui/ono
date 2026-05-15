@@ -13,6 +13,10 @@
   (func $config_difficulty (import "ono" "config_difficulty") (result i32))
   (func $config_steps (import "ono" "config_steps") (result i32))
   (func $config_prints (import "ono" "config_prints") (result i32))
+  (func $config_cells_count (import "ono" "config_cells_count") (result i32))
+  (func $config_cells_x (import "ono" "config_cells_x") (param i32) (result i32))
+  (func $config_cells_y (import "ono" "config_cells_y") (param i32) (result i32))
+  (func $config_cells_v (import "ono" "config_cells_v") (param i32) (result i32))
   (func $read_int (import "ono" "read_int") (result i32))
   (func $begin_drawing (import "ono" "begin_drawing"))
   (func $end_drawing (import "ono" "end_drawing"))
@@ -65,7 +69,11 @@
     call $display
   )
 
-  (func $genGrid (param $n i32) (param $difficulty i32) (local $step i32) (local $random i32) (local $test i32)
+  (func $genGrid (param $n i32) (param $difficulty i32)
+    (local $step i32)
+    (local $random i32)
+    (local $found i32)
+    (local $i_c i32)
     i32.const 0
     local.set $step
     (i32.store (local.get $step) (i32.const 1)) ;; tjr mort
@@ -88,20 +96,61 @@
         (i32.add (local.get $step) (i32.const 4))
         local.set $step
 
-        ;; generate random number and store in memory
-        call $random_i32
-        local.set $random
-        (i32.store (local.get $step) (i32.rem_u (local.get $random) (local.get $difficulty)))
+        ;; config cells search
+        i32.const 0
+        local.set $found
+        i32.const 0
+        local.set $i_c
 
-        ;; generate cell based on random number
-        local.get $random
-        local.get $difficulty
-        call $genCell
-        br $loop
+        (block $c_check
+          (loop $c_loop
+            ;; On parcourt les cellules prioritaires de la config
+            (if (i32.ge_u (local.get $i_c) (call $config_cells_count))
+              (then (br $c_check))
+            )
+            
+            ;; Si (config_x == curr_x) ET (config_y == curr_y)
+            (i32.and
+              (i32.eq (call $config_cells_x (local.get $i_c)) (i32.rem_u (i32.sub (i32.sub (i32.mul (global.get $w) (global.get $h)) (local.get $n)) (i32.const 1)) (global.get $w)))
+              (i32.eq (call $config_cells_y (local.get $i_c)) (i32.div_u (i32.sub (i32.sub (i32.mul (global.get $w) (global.get $h)) (local.get $n)) (i32.const 1)) (global.get $w)))
+            )
+    
+            ;; Si trouvé, alors on met la valeur dans random en brut
+            (if (then
+                (local.set $found (i32.const 1))
+                (local.set $random (call $config_cells_v (local.get $i_c)))
+                br $c_check))
+            
+            (local.set $i_c (i32.add (local.get $i_c) (i32.const 1)))
+            br $c_loop
+          )
+        )
+
+        ;; si trouvé, on utilise la valeur random en brut
+        (if (local.get $found)
+          (then
+            (i32.store (local.get $step) (local.get $random))
+            local.get $random
+            call $cell_print
+            br $loop
+          )
+          ;; sinon on utilise la difficulté + random
+          (else
+            ;; generate random number and store in memory
+            call $random_i32
+            local.set $random
+            (i32.store (local.get $step) (i32.rem_u (local.get $random) (local.get $difficulty)))
+
+            ;; generate cell based on random number
+            local.get $random
+            local.get $difficulty
+            call $genCell
+            br $loop
+          )
+        )
       )
     )
   )
-
 
   (func $genCell (param $random i32) (param $difficulty i32)
     ;; higher difficulty, less likely to get a fox

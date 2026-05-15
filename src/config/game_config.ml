@@ -7,9 +7,14 @@ type t = {
   difficulty : int32 option [@sexp.option];
   steps : int32 option [@sexp.option];
   prints : int32 option [@sexp.option];
+  cells : (int32 * int32 * int32) list option [@sexp.option];
 } [@@deriving sexp]
 
 let current_config : t option ref = ref None
+let empty_config = { 
+  height = None; width = None; difficulty = None; 
+  steps = None; prints = None; cells = None 
+}
 
 let load (file : Fpath.t) : unit =
   let sexp = Sexplib.Sexp.load_sexp (Fpath.to_string file) in
@@ -37,7 +42,7 @@ let difficulty () : int32 option =
   let set_steps (value : int32 option) : unit =
     (match !current_config with
       | Some cc -> current_config := Some {cc with steps = value }
-      | None -> current_config := Some { width = None; height = None; difficulty = None; steps = value; prints = None }
+      | None -> current_config := Some { empty_config with steps = value}
     )
 
   let steps () : int32 option =
@@ -49,7 +54,7 @@ let difficulty () : int32 option =
 let set_prints (value : int32 option) : unit =
   (match !current_config with
     | Some cc -> current_config := Some {cc with prints = value }
-    | None -> current_config := Some { width = None; height = None; difficulty = None; steps = None; prints = value }
+    | None -> current_config := Some { empty_config with prints = value}
   )
 
 let prints () : int32 option =
@@ -57,3 +62,8 @@ let prints () : int32 option =
    | Some cc -> cc.prints
    | None -> None
   )
+
+let cells () : (int32 * int32 * int32) list option =
+  match !current_config with
+  | Some cc -> cc.cells
+  | None -> None
