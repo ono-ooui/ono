@@ -17,6 +17,7 @@
   (func $config_cells_x (import "ono" "config_cells_x") (param i32) (result i32))
   (func $config_cells_y (import "ono" "config_cells_y") (param i32) (result i32))
   (func $config_cells_v (import "ono" "config_cells_v") (param i32) (result i32))
+  (func $symbol_i32 (import "ono" "symbol_i32") (result i32))
   (func $read_int (import "ono" "read_int") (result i32))
   (func $begin_drawing (import "ono" "begin_drawing"))
   (func $end_drawing (import "ono" "end_drawing"))
