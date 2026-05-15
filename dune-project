@@ -31,6 +31,12 @@
   (dune-build-info :build)
   (dune-site :build)
   ;; runtime
+  (ppx_sexp_conv
+   (= "v0.17.1"))
+  (sexplib
+   (= "v0.17.0"))
+  (raylib
+   (= 1.6.0))
   (bos
    (>= 0.2.1))
   (cmdliner
