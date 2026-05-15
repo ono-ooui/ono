@@ -48,3 +48,20 @@ dune install\
 ono concrete src/main.wat --seed=42 --config src/config/config.sexp --use-graphical-window --height=800 --width=800
 
 # Symbolic :
+
+Solveur de polynome partiellement implementé.
+
+## Exécution :
+
+opam switch create . --deps-only
+eval $(opam env)\
+opam install . --with-test --with-dev-setup --with-doc --deps-only\
+dune build\
+dune install\
+ono symbolic ./test/cram/symbolic/poly.t/poly.wat\
+(saisir manuellement les valeurs des polynômes
+exemple: 1 [entrer] -7 [entrer] 14 [entrer] -8 [entrer])
+
+# Difficultés
+
+Manque de coordination : Une mauvaise répartition des tâches qui a limité l'avancement du projet.
