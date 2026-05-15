@@ -66,3 +66,7 @@ Exemples de polynômes :
 - 3 racines : 1 -7 14 -8
 - 2 racines : 1 0 -3 2
 - 1 racine : 1 -1 1 -1
+
+# Difficultés
+
+Manque de coordination : Une mauvaise répartition des tâches qui a limité l'avancement du projet.
